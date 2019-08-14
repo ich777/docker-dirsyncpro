@@ -11,7 +11,7 @@ ENV REMOTE_DIR="192.168.1.1"
 ENV REMOTE_TYPE="smb"
 ENV REMOTE_USER=""
 ENV REMOTE_PWD=""
-ENV JAVA_URL="https://github.com/ich777/docker-minecraft-basic-server/raw/master/runtime/8u211.tar.gz"
+ENV RUNTIME_NAME="jre1.8.0_211"
 ENV UID=99
 ENV GID=100
 
