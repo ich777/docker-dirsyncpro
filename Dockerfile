@@ -16,7 +16,7 @@ ENV UID=99
 ENV GID=100
 
 RUN mkdir $DATA_DIR
-RUN useradd -s /bin/bash --uid $UID --gid $GID dirsyncpro
+RUN useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID dirsyncpro
 RUN chown -R dirsyncpro $DATA_DIR
 
 RUN ulimit -n 2048
