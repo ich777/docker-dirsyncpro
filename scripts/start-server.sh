@@ -29,7 +29,7 @@ fi
 
 if [ "${REMOTE_TYPE}" == "smb" ]; then
 	echo "---Mounting SAMBA share---"
-	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD} //${REMOTE_DIR} /mnt ; then
+	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw //${REMOTE_DIR} /mnt ; then
     	echo "---Mounted ${REMOTE_DIR} to /mnt---"
     else
     	echo "---Couldn't mount ${REMOTE_DIR}---"
