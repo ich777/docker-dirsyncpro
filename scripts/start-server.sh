@@ -8,7 +8,7 @@ else
 fi
 
 echo "---Checking if Runtime is installed---"
-if [ -z "$(find ${DATA_DIR} -name jre*)" ]; then
+if [ -z "$(find ${DATA_DIR}/runtime -name jre*)" ]; then
     if [ "${RUNTIME_NAME}" == "jre1.8.0_211" ]; then
     	echo "---Downloading and installing Runtime---"
 		cd ${DATA_DIR}/runtime
@@ -26,6 +26,19 @@ if [ -z "$(find ${DATA_DIR} -name jre*)" ]; then
 else
 	echo "---Runtime found---"
 fi      
+
+if [ "${REMOTE_TYPE}" == "smb" ]; then
+	echo "---Mounting SAMBA share---"
+	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD} //${REMOTE_DIR} /mnt ; then
+    	echo "---Mounted ${REMOTE_DIR} to /mnt---"
+    else
+    	echo "---Couldn't mount ${REMOTE_DIR}---"
+        sleep infinity
+    fi
+elif [ "${REMOTE_TYPE}" == "ftp" ];
+
+
+fi
 
 
 echo "---Sleep zZz---"
