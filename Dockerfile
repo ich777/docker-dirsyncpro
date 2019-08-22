@@ -3,7 +3,7 @@ FROM ubuntu
 MAINTAINER ich777
 
 RUN apt-get update
-RUN apt-get -y install wget
+RUN apt-get -y install wget cifs-utils sudo
 
 ENV DATA_DIR=/dirsyncpro
 ENV SERVER_DIR="/mnt/user"
