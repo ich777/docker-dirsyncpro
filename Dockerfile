@@ -20,6 +20,7 @@ RUN useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID dirsyncpro
 RUN chown -R dirsyncpro $DATA_DIR
 
 RUN ulimit -n 2048
+RUN echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
