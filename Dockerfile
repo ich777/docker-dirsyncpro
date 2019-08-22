@@ -25,6 +25,8 @@ RUN echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
 RUN chown -R dirsyncpro /opt/scripts
+RUN chmod -R 770 /mnt
+RUN chown -R dirsyncpro /mnt
 
 USER dirsyncpro
 
