@@ -6,7 +6,6 @@ RUN apt-get update
 RUN apt-get -y install wget cifs-utils sudo
 
 ENV DATA_DIR=/dirsyncpro
-ENV SERVER_DIR="/mnt/user"
 ENV REMOTE_DIR="192.168.1.1"
 ENV REMOTE_TYPE="smb"
 ENV REMOTE_USER=""
