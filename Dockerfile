@@ -3,7 +3,7 @@ FROM ubuntu
 MAINTAINER ich777
 
 RUN apt-get update
-RUN apt-get -y install wget cifs-utils sudo curl
+RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2
 
 ENV DATA_DIR=/dirsyncpro
 ENV REMOTE_DIR="192.168.1.1"
