@@ -4,7 +4,7 @@ if [ ! -d ${DATA_DIR}/runtime ]; then
 	echo "---'runtime' folder not found, creating...---"
 	mkdir ${DATA_DIR}/runtime
 else
-	echo "---"runtime" folder found---"
+	echo "---'runtime' folder found---"
 fi
 
 echo "---Checking if Runtime is installed---"
