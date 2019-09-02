@@ -27,6 +27,9 @@ else
 	echo "---Runtime found---"
 fi      
 
+echo "---Sleep zZz---"
+sleep infinity
+
 if [ "${REMOTE_TYPE}" == "smb" ]; then
 	echo "---Mounting SAMBA share---"
 	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw //${REMOTE_DIR} /mnt ; then
@@ -41,5 +44,3 @@ elif [ "${REMOTE_TYPE}" == "ftp" ];
 fi
 
 
-echo "---Sleep zZz---"
-sleep infinity
