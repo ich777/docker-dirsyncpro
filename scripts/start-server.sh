@@ -128,7 +128,7 @@ echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \;
 chmod -R 770 ${DATA_DIR}
 
-if [ "${CMD_MODE}" == "true" }; then
+if [ "${CMD_MODE}" == "true" ]; then
 	echo "-----------------------------------------"
     echo "---ATTENTION command line mode enabled---"
     echo "----starting sync of ${CMD_FILE}.dsc-----"
@@ -139,9 +139,9 @@ if [ "${CMD_MODE}" == "true" }; then
     sleep 10
     echo "---Starting in 20 seconds---"
     sleep 10
-    echo "---Startin in 10 seconds---"
+    echo "---Starting in 10 seconds---"
     sleep 5
-    echo "---Sync starts in 5 secons---"
+    echo "---Starting in 5 seconds----"
     sleep 5
 	if ${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar -nogui /dirsyncpro/${CMD_FILE}.dsc ; then
 		echo "---Sync ${CMD_FILE}.dsc finished---"
