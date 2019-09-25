@@ -28,11 +28,11 @@ Please also check out the Developers website of DirSyncPro: https://www.dirsyncp
 ## Run example
 ```
 docker run --name DirSyncPro -d \
-	-p 8080:8080 \
-	--env 'REMOTE_TYPE=smb' \
-	--env 'REMOTE_DIR=192.168.1.1' \
-	--env 'REMOTE_USER=username' \
-	--env 'REMOTE_PWD=password' \
+    -p 8080:8080 \
+    --env 'REMOTE_TYPE=smb' \
+    --env 'REMOTE_DIR=192.168.1.1' \
+    --env 'REMOTE_USER=username' \
+    --env 'REMOTE_PWD=password' \
     --env 'RUNTIME_NAME=jre1.8.0_211 \
     --env 'DL_URL=https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz' \
     --env 'UID=99' \
@@ -42,7 +42,7 @@ docker run --name DirSyncPro -d \
     --cap-add SYS_ADMIN \
     --cap-add DAC_READ_SEARCH \
     --restart=unless-stopped \
-	ich777/steamcmd:latest
+    ich777/steamcmd:latest
 ```
 
 
