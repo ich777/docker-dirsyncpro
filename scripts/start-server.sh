@@ -80,7 +80,7 @@ fi
 
 if [ "${REMOTE_TYPE}" == "smb" ]; then
 	echo "---Mounting SAMBA share---"
-    if [ ! -D /mnt/smb ]; then
+    if [ ! -d /mnt/smb ]; then
     	mkdir /mnt/smb
     fi
 	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw //${REMOTE_DIR} /mnt/smb ; then
