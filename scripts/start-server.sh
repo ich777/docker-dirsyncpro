@@ -88,6 +88,8 @@ if [ "${REMOTE_TYPE}" == "smb" ]; then
     fi
 elif [ "${REMOTE_TYPE}" == "ftp" ]; then
 	echo "---nothing---"
+elif [ "${REMOTE_TYPE}" == "local" ]; then
+	echo "---Local mounting is selected, please mount your local path to the container---"
 fi
 
 echo "---Preparing Server---"
