@@ -96,7 +96,7 @@ if [ "${REMOTE_TYPE}" == "smb" ]; then
     if [ ! -d /mnt/smb ]; then
     	mkdir /mnt/smb
     fi
-	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw //${REMOTE_DIR} /mnt/smb ; then
+	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} //${REMOTE_DIR} /mnt/smb ; then
 		echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
 	else
 		echo "---Couldn't mount ${REMOTE_DIR}---"
@@ -143,7 +143,7 @@ if [ "${CMD_MODE}" == "true" ]; then
     sleep 5
     echo "---Starting in 5 seconds----"
     sleep 5
-	if ${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar -nogui /dirsyncpro/${CMD_FILE}.dsc ; then
+	if ${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar -nogui -quit /dirsyncpro/${CMD_FILE}.dsc ; then
 		echo "---Sync ${CMD_FILE}.dsc finished---"
         sleep infinity
 	else
