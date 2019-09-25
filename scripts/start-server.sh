@@ -37,7 +37,7 @@ if [ "$DL_V" == "$CUR_V" ]; then
 elif [ -z "CUR_V" ]; then
 	echo "---DirSyncPro not found, downloading...---"
     cd ${DATA_DIR}
-    wget "${DL_URL}"
+    wget -q -O ${DL_URL}
     if [ ! -f ${DATA_DIR}/DirSyncPro-$DL_V-Linux.tar.gz ]; then
     	echo "-------------------------------------------------------"
     	echo "---Something went wrong couldn't download DirSyncPro---"
@@ -47,7 +47,14 @@ elif [ -z "CUR_V" ]; then
         echo "-------------------------------------------------------"
         sleep infinity
     fi
-	tar -xfv DirSyncPro-$DL_V-Linux.tar.gz
+	tar -xzf DirSyncPro-$DL_V-Linux.tar.gz
+    if [ ! -d ${DATA_DIR}/DirSyncPro-$DL_V-Linux ]; then
+    	echo "-------------------------------------------------------"
+    	echo "---Something went wrong couldn't extract DirSyncPro----"
+        echo "-----------Putting server into sleep mode--------------"
+        echo "-------------------------------------------------------"
+        sleep infinity
+    fi
     touch dirsync-$DL_V
     rm -R DirSyncPro-$DL_V-Linux.tar.gz
     CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
@@ -70,7 +77,14 @@ elif [ "$DL_V" != "$CUR_V" ]; then
         echo "-------------------------------------------------------"
         sleep infinity
     fi
-	tar -xfv DirSyncPro-$DL_V-Linux.tar.gz
+	tar -xzf DirSyncPro-$DL_V-Linux.tar.gz
+    if [ ! -d ${DATA_DIR}/DirSyncPro-$DL_V-Linux ]; then
+    	echo "-------------------------------------------------------"
+    	echo "---Something went wrong couldn't extract DirSyncPro----"
+        echo "-----------Putting server into sleep mode--------------"
+        echo "-------------------------------------------------------"
+        sleep infinity
+    fi
     touch dirsync-$DL_V
     rm -R DirSyncPro-$DL_V-Linux.tar.gz
     CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
@@ -122,7 +136,7 @@ screen -S x11vnc -L -Logfile ${DATA_DIR}/x11vncLog.0 -d -m /opt/scripts/start-x1
 sleep 5
 
 echo "---Starting noVNC server---"
-websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 80 localhost:5900
+websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:5900
 sleep 5
 
 echo "---Starting DirSyncPro---"
