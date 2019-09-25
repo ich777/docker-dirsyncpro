@@ -18,7 +18,7 @@ Please also check out the Developers website of DirSyncPro: https://www.dirsyncp
 | RUNTIME_NAME | Runtime name (must be profided) | jre1.8.0_211 |
 | DL_URL | Download URL for DirSyncPro | https://sourceforge.net/projects/directorysync/files... |
 | CMD_MODE | Set to 'true' if you want to use command line mode (otherwise blank) | |
-| CMD_FIEL | Specify the CMD file without the .dsc extension (only for CMD_MODE) | |
+| CMD_FILE | Specify the CMD file without the .dsc extension (only for CMD_MODE) | |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 
