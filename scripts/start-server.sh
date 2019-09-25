@@ -80,15 +80,22 @@ fi
 
 if [ "${REMOTE_TYPE}" == "smb" ]; then
 	echo "---Mounting SAMBA share---"
-	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw //${REMOTE_DIR} /mnt ; then
-    	echo "---Mounted ${REMOTE_DIR} to /mnt---"
-    else
-    	echo "---Couldn't mount ${REMOTE_DIR}---"
-        sleep infinity
+    if [ ! -D /mnt/smb ]; then
+    	mkdir /mnt/smb
     fi
-elif [ "${REMOTE_TYPE}" == "ftp" ]; then
+	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw //${REMOTE_DIR} /mnt/smb ; then
+		echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
+	else
+		echo "---Couldn't mount ${REMOTE_DIR}---"
+		sleep infinity
+	fi
+fi
+
+if [ "${REMOTE_TYPE}" == "ftp" ]; then
 	echo "---nothing---"
-elif [ "${REMOTE_TYPE}" == "local" ]; then
+fi
+
+if [ "${REMOTE_TYPE}" == "local" ]; then
 	echo "---Local mounting is selected, please mount your local path to the container---"
 fi
 
