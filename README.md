@@ -47,3 +47,6 @@ docker run --name DirSyncPro -d \
 
 
 Please check also the Developers (O. Givi) website out: https://www.dirsyncpro.org/
+
+
+#### Support Thread: https://forums.unraid.net/topic/83786-support-ich777-application-dockers/
