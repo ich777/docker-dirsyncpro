@@ -2,9 +2,6 @@
 DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
 CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 
-echo "---Sleep zZz---"
-sleep infinity
-
 echo "---Checking for 'runtime' folder---"
 if [ ! -d ${DATA_DIR}/runtime ]; then
 	echo "---'runtime' folder not found, creating...---"
@@ -76,6 +73,7 @@ elif [ "$DL_V" != "$CUR_V" ]; then
 	tar -xfv DirSyncPro-$DL_V-Linux.tar.gz
     touch dirsync-$DL_V
     rm -R DirSyncPro-$DL_V-Linux.tar.gz
+    CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 fi
 
 
@@ -88,11 +86,28 @@ if [ "${REMOTE_TYPE}" == "smb" ]; then
     	echo "---Couldn't mount ${REMOTE_DIR}---"
         sleep infinity
     fi
-elif [ "${REMOTE_TYPE}" == "ftp" ];
-
-
+elif [ "${REMOTE_TYPE}" == "ftp" ]; then
+	echo "---nothing---"
 fi
 
-export DISPLAY=:99
+echo "---Preparing Server---"
+echo "---Checking for old logfiles---"
+find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
+find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
+echo "---Checking for old display lock files---"
+find /tmp -name ".X99*" -exec rm -f {} \;
 
-screen -S Xvfb -L -Logfile ${SERVER_DIR}/XvfbLog.0 
+echo "---Starting Xvfb server---"
+screen -S Xvfb -L -Logfile ${DATA_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb.sh
+sleep 5
+echo "---Starting x11vnc server---"
+screen -S x11vnc -L -Logfile ${DATA_DIR}/x11vncLog.0 -d -m /opt/scripts/start-x11.sh
+sleep 5
+
+echo "---Starting noVNC server---"
+websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 80 localhost:5900
+sleep 5
+
+echo "---Starting DirSyncPro---"
+export DISPLAY=:99
+${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
