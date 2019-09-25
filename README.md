@@ -35,9 +35,9 @@ docker run --name DirSyncPro -d \
 	--env 'REMOTE_PWD=password' \
     --env 'RUNTIME_NAME=jre1.8.0_211 \
     --env 'DL_URL=https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz' \
-	--env 'UID=99' \
-	--env 'GID=100' \
-	--volume /mnt/user/appdata/dirsyncpro:/dirsyncpro \
+    --env 'UID=99' \
+    --env 'GID=100' \
+    --volume /mnt/user/appdata/dirsyncpro:/dirsyncpro \
     --privileged=true \
     --cap-add SYS_ADMIN \
     --cap-add DAC_READ_SEARCH \
