@@ -18,19 +18,15 @@ ENV UID=99
 ENV GID=100
 
 RUN mkdir $DATA_DIR
-RUN useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID dirsyncpro
-RUN chown -R dirsyncpro $DATA_DIR
+RUN chown -R root $DATA_DIR
 
 RUN ulimit -n 2048
-RUN echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
-RUN chown -R dirsyncpro /opt/scripts
+RUN chown -R root /opt/scripts
 RUN chmod -R 770 /mnt
-RUN chown -R dirsyncpro /mnt
-
-USER dirsyncpro
+RUN chown -R root /mnt
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start-server.sh"]
