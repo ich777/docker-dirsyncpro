@@ -77,7 +77,6 @@ elif [ "$DL_V" != "$CUR_V" ]; then
 fi
 
 
-
 if [ "${REMOTE_TYPE}" == "smb" ]; then
 	echo "---Mounting SAMBA share---"
     if [ ! -d /mnt/smb ]; then
@@ -92,7 +91,15 @@ if [ "${REMOTE_TYPE}" == "smb" ]; then
 fi
 
 if [ "${REMOTE_TYPE}" == "ftp" ]; then
-	echo "---nothing---"
+    if [ ! -d /mnt/ftp ]; then
+    	mkdir /mnt/ftp
+    fi
+	if curlftpfs ${REMOTE_USER}:${REMOTE_PWD}@${REMOTE_DIR} /mnt/ftp ; then
+		echo "---Mounted ${REMOTE_DIR} to /mnt/ftp---"
+	else
+		echo "---Couldn't mount ${REMOTE_DIR}---"
+		sleep infinity
+	fi
 fi
 
 if [ "${REMOTE_TYPE}" == "local" ]; then
