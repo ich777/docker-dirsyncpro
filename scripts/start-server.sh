@@ -1,4 +1,10 @@
 #!/bin/bash
+DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
+CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
+
+echo "---Sleep zZz---"
+sleep infinity
+
 echo "---Checking for 'runtime' folder---"
 if [ ! -d ${DATA_DIR}/runtime ]; then
 	echo "---'runtime' folder not found, creating...---"
@@ -25,10 +31,54 @@ if [ -z "$(find ${DATA_DIR}/runtime -name jre*)" ]; then
     fi
 else
 	echo "---Runtime found---"
-fi      
+fi
 
-echo "---Sleep zZz---"
-sleep infinity
+
+echo "---Checking for DirSyncPro---"
+if [ "$DL_V" == "$CUR_V" ]; then
+	echo "---DirSyncPro found---"
+elif [ -z "CUR_V" ]; then
+	echo "---DirSyncPro not found, downloading...---"
+    cd ${DATA_DIR}
+    wget "${DL_URL}"
+    if [ ! -f ${DATA_DIR}/DirSyncPro-$DL_V-Linux.tar.gz ]; then
+    	echo "-------------------------------------------------------"
+    	echo "---Something went wrong couldn't download DirSyncPro---"
+        echo "------Please make sure to put in the Linux version-----"
+        echo "---------------in the DL_URL variable------------------"
+        echo "----------Example: DirSyncPro-1.53.Linux.tar.gz--------"
+        echo "-------------------------------------------------------"
+        sleep infinity
+    fi
+	tar -xfv DirSyncPro-$DL_V-Linux.tar.gz
+    touch dirsync-$DL_V
+    rm -R DirSyncPro-$DL_V-Linux.tar.gz
+    CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
+elif [ "$DL_V" != "$CUR_V" ]; then
+	echo "-------------------------------------------"
+    echo "---Version missmatch installed version: $CUR_V---"
+    echo "------------Preferred versifon: $DL_V-----------"
+    echo "----------Installing version: $DL_V-----------"
+	echo "-------------------------------------------"
+    cd ${DATA_DIR}
+    rm -R DirSyncPro-$CUR_V-Linux
+    rm -R dirsync-$CUR_V
+    wget "${DL_URL}"
+    if [ ! -f ${DATA_DIR}/DirSyncPro-$DL_V-Linux.tar.gz ]; then
+    	echo "-------------------------------------------------------"
+    	echo "---Something went wrong couldn't download DirSyncPro---"
+        echo "------Please make sure to put in the Linux version-----"
+        echo "---------------in the DL_URL variable------------------"
+        echo "----------Example: DirSyncPro-1.53.Linux.tar.gz--------"
+        echo "-------------------------------------------------------"
+        sleep infinity
+    fi
+	tar -xfv DirSyncPro-$DL_V-Linux.tar.gz
+    touch dirsync-$DL_V
+    rm -R DirSyncPro-$DL_V-Linux.tar.gz
+fi
+
+
 
 if [ "${REMOTE_TYPE}" == "smb" ]; then
 	echo "---Mounting SAMBA share---"
@@ -43,4 +93,6 @@ elif [ "${REMOTE_TYPE}" == "ftp" ];
 
 fi
 
+export DISPLAY=:99
 
+screen -S Xvfb -L -Logfile ${SERVER_DIR}/XvfbLog.0 
