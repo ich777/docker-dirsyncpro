@@ -128,17 +128,41 @@ echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \;
 chmod -R 770 ${DATA_DIR}
 
-echo "---Starting Xvfb server---"
-screen -S Xvfb -L -Logfile ${DATA_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb.sh
-sleep 5
-echo "---Starting x11vnc server---"
-screen -S x11vnc -L -Logfile ${DATA_DIR}/x11vncLog.0 -d -m /opt/scripts/start-x11.sh
-sleep 5
+if [ "${CMD_MODE}" == "true" }; then
+	echo "-----------------------------------------"
+    echo "---ATTENTION command line mode enabled---"
+    echo "----starting sync of ${CMD_FILE}.dsc-----"
+    echo "---in 30 seconds, please be sure that----"
+    echo "----you put your cmd file in the main----"
+    echo "---------directory of the Docker---------"
+    echo "-----------------------------------------"
+    sleep 10
+    echo "---Starting in 20 seconds---"
+    sleep 10
+    echo "---Startin in 10 seconds---"
+    sleep 5
+    echo "---Sync starts in 5 secons---"
+    sleep 5
+	if ${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar -nogui /dirsyncpro/${CMD_FILE}.dsc ; then
+		echo "---Sync ${CMD_FILE}.dsc finished---"
+        sleep infinity
+	else
+		echo "---Couldn't find ${CMD_FILE}.dsc please be sure to put it in the main directory---"
+		sleep infinity
+	fi
+else
+	echo "---Starting Xvfb server---"
+	screen -S Xvfb -L -Logfile ${DATA_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb.sh
+	sleep 5
+	echo "---Starting x11vnc server---"
+	screen -S x11vnc -L -Logfile ${DATA_DIR}/x11vncLog.0 -d -m /opt/scripts/start-x11.sh
+	sleep 5
 
-echo "---Starting noVNC server---"
-websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:5900
-sleep 5
+	echo "---Starting noVNC server---"
+	websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:5900
+	sleep 5
 
-echo "---Starting DirSyncPro---"
-export DISPLAY=:99
-${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
+	echo "---Starting DirSyncPro---"
+	export DISPLAY=:99
+	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
+fi
