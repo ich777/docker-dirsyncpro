@@ -44,6 +44,7 @@ docker run --name DirSyncPro -d \
     --restart=unless-stopped \
     ich777/steamcmd:latest
 ```
+### Webgui address: http://[SERVERIP]:[PORT]/vnc_auto.html
 
 
 Please check also the Developers (O. Givi) website out: https://www.dirsyncpro.org/
