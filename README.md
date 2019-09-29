@@ -42,7 +42,7 @@ docker run --name DirSyncPro -d \
     --cap-add SYS_ADMIN \
     --cap-add DAC_READ_SEARCH \
     --restart=unless-stopped \
-    ich777/steamcmd:latest
+    ich777/dirsyncpro
 ```
 ### Webgui address: http://[SERVERIP]:[PORT]/vnc_auto.html
 
