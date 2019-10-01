@@ -132,29 +132,6 @@ if [ "${REMOTE_TYPE}" == "local" ]; then
 	echo "---Local mounting is selected, please mount your local path to the container---"
 fi
 
-echo "---Checking display configuration---"
-if [ ! -f "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties" ]; then
-    cd ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/
-    touch "dirsyncpro.properties"
-	echo "dirsyncpro.window.last.geometry.y=0
-dirsyncpro.window.last.geometry.x=0
-dirsyncpro.window.last.geometry.height=768
-dirsyncpro.window.last.geometry.width=1050" >> "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties"
-else
-	if [ $(grep -e 'dirsyncpro.window.last.geometry.y=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.y=0" ]; then
-	sed -i "/dirsyncpro.window.last.geometry.y=/c\dirsyncpro.window.last.geometry.y=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
-    fi
-	if [ $(grep -e 'dirsyncpro.window.last.geometry.x=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.x=0" ]; then
-	sed -i "/dirsyncpro.window.last.geometry.x=/c\dirsyncpro.window.last.geometry.x=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
-    fi
-	if [ $(grep -e 'dirsyncpro.window.last.geometry.height=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.height=768" ]; then
-	sed -i "/dirsyncpro.window.last.geometry.height=/c\dirsyncpro.window.last.geometry.height=768" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
-    fi
-	if [ $(grep -e 'dirsyncpro.window.last.geometry.width=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.width=1050" ]; then
-	sed -i "/dirsyncpro.window.last.geometry.width=/c\dirsyncpro.window.last.geometry.width=1050" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
-    fi
-fi
-
 echo "---Preparing Server---"
 echo "---Checking for old logfiles---"
 find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
