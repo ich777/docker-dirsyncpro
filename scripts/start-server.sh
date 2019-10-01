@@ -141,16 +141,16 @@ dirsyncpro.window.last.geometry.x=0
 dirsyncpro.window.last.geometry.height=1050
 dirsyncpro.window.last.geometry.width=768" >> "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties"
 else
-	if [ grep -e 'dirsyncpro.window.last.geometry.y=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.y=0" ]; then
+	if [ $(grep -e 'dirsyncpro.window.last.geometry.y=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.y=0" ]; then
 	sed -i "/dirsyncpro.window.last.geometry.y=/c\dirsyncpro.window.last.geometry.y=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
     fi
-	if [ grep -e 'dirsyncpro.window.last.geometry.x=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.x=0" ]; then
+	if [ $(grep -e 'dirsyncpro.window.last.geometry.x=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.x=0" ]; then
 	sed -i "/dirsyncpro.window.last.geometry.x=/c\dirsyncpro.window.last.geometry.x=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
     fi
-	if [ grep -e 'dirsyncpro.window.last.geometry.height=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.height=1050" ]; then
+	if [ $(grep -e 'dirsyncpro.window.last.geometry.height=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.height=1050" ]; then
 	sed -i "/dirsyncpro.window.last.geometry.height=/c\dirsyncpro.window.last.geometry.height=1050" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
     fi
-	if [ grep -e 'dirsyncpro.window.last.geometry.width=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.width=768" ]; then
+	if [ $(rep -e 'dirsyncpro.window.last.geometry.width=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.width=768" ]; then
 	sed -i "/dirsyncpro.window.last.geometry.width=/c\dirsyncpro.window.last.geometry.width=768" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
     fi
 fi
