@@ -116,6 +116,18 @@ if [ "${REMOTE_TYPE}" == "ftp" ]; then
 	fi
 fi
 
+if [ "${REMOTE_TYPE}" == "webdav" ]; then
+    if [ ! -d /mnt/webdav ]; then
+    	mkdir /mnt/webdav
+    fi
+	if echo "${REMOTE_PWD}" | sudo mount -t davfs -o noexec,username=${REMOTE_USER},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /mnt/webdav/ ; then
+		echo "---Mounted ${REMOTE_DIR} to /mnt/webdav---"
+	else
+		echo "---Couldn't mount ${REMOTE_DIR}---"
+		sleep infinity
+	fi
+fi
+
 if [ "${REMOTE_TYPE}" == "local" ]; then
 	echo "---Local mounting is selected, please mount your local path to the container---"
 fi
