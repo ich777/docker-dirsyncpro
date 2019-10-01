@@ -11,7 +11,7 @@ Please also check out the Developers website of DirSyncPro: https://www.dirsyncp
 | Name | Value | Example |
 | --- | --- | --- |
 | DATA_DIR | Folder for DirSyncPro | /dirsyncpro |
-| REMOTE_DIR| Examples: local: 'empty' - smb: '192.168.1.1/backup' - ftp: '192.168.1.1' - webdav: 'https://nextcloud.host.com/remote.php/webdav' | 192.168.1.1 |
+| REMOTE_DIR| Depending on the Remote Type fill in your connection informations for local: 'leave empty' - smb: '192.168.1.1/backup' - ftp: '192.168.1.1' - webdav: 'https://nextcloud.host.com/remote.php/webdav' | 192.168.1.1 |
 | REMOTE_TYPE | Currently 'local', 'smb', 'ftp' and 'webdav' are available | local |
 | REMOTE_USER | Remote username (must be provided - not for 'local') | username |
 | REMOTE_PWD | Remote password (must be provided - not for 'local') | password |
