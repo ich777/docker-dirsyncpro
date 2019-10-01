@@ -120,7 +120,7 @@ if [ "${REMOTE_TYPE}" == "webdav" ]; then
     if [ ! -d /mnt/webdav ]; then
     	mkdir /mnt/webdav
     fi
-	if sudo mount -t davfs -o noexec username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /mnt/dav/ ; then
+	if sudo mount -t davfs -o noexec,username=${REMOTE_USER},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /mnt/dav/ ; then
 		echo "---Mounted ${REMOTE_DIR} to /mnt/webdav---"
 	else
 		echo "---Couldn't mount ${REMOTE_DIR}---"
