@@ -138,8 +138,8 @@ if [ ! -f "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties" ]; then
     touch "dirsyncpro.properties"
 	echo "dirsyncpro.window.last.geometry.y=0
 dirsyncpro.window.last.geometry.x=0
-dirsyncpro.window.last.geometry.height=1050
-dirsyncpro.window.last.geometry.width=768" >> "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties"
+dirsyncpro.window.last.geometry.height=768
+dirsyncpro.window.last.geometry.width=1050" >> "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties"
 else
 	if [ $(grep -e 'dirsyncpro.window.last.geometry.y=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties) != "dirsyncpro.window.last.geometry.y=0" ]; then
 	sed -i "/dirsyncpro.window.last.geometry.y=/c\dirsyncpro.window.last.geometry.y=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
