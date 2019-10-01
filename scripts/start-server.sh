@@ -116,8 +116,43 @@ if [ "${REMOTE_TYPE}" == "ftp" ]; then
 	fi
 fi
 
+if [ "${REMOTE_TYPE}" == "webdav" ]; then
+    if [ ! -d /mnt/webdav ]; then
+    	mkdir /mnt/webdav
+    fi
+	if sudo mount -t davfs -o noexec username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /mnt/dav/ ; then
+		echo "---Mounted ${REMOTE_DIR} to /mnt/webdav---"
+	else
+		echo "---Couldn't mount ${REMOTE_DIR}---"
+		sleep infinity
+	fi
+fi
+
 if [ "${REMOTE_TYPE}" == "local" ]; then
 	echo "---Local mounting is selected, please mount your local path to the container---"
+fi
+
+echo "---Checking display configuration---"
+if [ ! -f "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties" ]; then
+    cd ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/
+    touch "dirsyncpro.properties"
+	echo "dirsyncpro.window.last.geometry.y=0
+dirsyncpro.window.last.geometry.x=0
+dirsyncpro.window.last.geometry.height=1050
+dirsyncpro.window.last.geometry.width=768" >> "${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties"
+else
+	if [ grep -e 'dirsyncpro.window.last.geometry.y=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.y=0" ]; then
+	sed -i "/dirsyncpro.window.last.geometry.y=/c\dirsyncpro.window.last.geometry.y=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
+    fi
+	if [ grep -e 'dirsyncpro.window.last.geometry.x=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.x=0" ]; then
+	sed -i "/dirsyncpro.window.last.geometry.x=/c\dirsyncpro.window.last.geometry.x=0" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
+    fi
+	if [ grep -e 'dirsyncpro.window.last.geometry.height=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.height=1050" ]; then
+	sed -i "/dirsyncpro.window.last.geometry.height=/c\dirsyncpro.window.last.geometry.height=1050" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
+    fi
+	if [ grep -e 'dirsyncpro.window.last.geometry.width=' ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties != "dirsyncpro.window.last.geometry.width=768" ]; then
+	sed -i "/dirsyncpro.window.last.geometry.width=/c\dirsyncpro.window.last.geometry.width=768" ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.properties
+    fi
 fi
 
 echo "---Preparing Server---"
