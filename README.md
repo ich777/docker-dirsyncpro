@@ -2,7 +2,7 @@
 This Docker will download and install DirSyncPro. You can sync your files to another offsite SMB, FTP and WebDAV share with encryption by CryFS.
 You can also use this tool to duplicate your files on the server to another directory.
 
-Also there is a commandline mode without the GUI, please be sure that you put your config file in the main directory of the Docker and specify it.
+Also there is a commandline mode without the GUI, please be sure that you put your config file in the main directory of the Docker and specify it without the '.dsc' extension.
 
 Encryption by CryFS is also supported if you want to sync your files to an external server and have extra security (see the Run example with encryption by CryFS). CryFS splits (according to the set blocksize) and encrypts your files with aes-256-gcm and your choosen password.
 
@@ -73,6 +73,13 @@ docker run --name DirSyncPro -d \
     --restart=unless-stopped \
     ich777/dirsyncpro
 ```
+
+>**NOTE** ENCRYPTION: The mounted folder will be automaticaly encrypted (smb: '/mnt/smb' - ftp: '/mnt/ftp' - webdav: '/mnt/webdav' - local: if you set the type to 'local' you must set the container mountpoint to: '/mnt/local').
+The docker will automaticaly create a directory named 'cryfs' in the main directory of DirSyncPro, please copy the 'cryfs.cfg' to a save place since you will need this file and your selected password for CryFS to decrypt the files.
+Restoring of encrypted files on another computer/server with this Docker: start the container once with CryFS enabled but set no password, the container will start and create the 'cryfs' directory, stop the container copy your cryfs.cfg in the 'cryfs' folder edit the Docker and set the apropriate password and blocksize for the cryfs.cfg and restart the Docker. Now you can sync from/or to your encrypted share again.
+
+Also there is a commandline mode without the GUI if you configured all right under the 'Show more settings' section, please be sure that you put your config file in the main directory of the Docker and specify it.
+
 ### Webgui address: http://[SERVERIP]:[PORT]/vnc_auto.html
 
 Please check also the DirSyncPro Developers (O. Givi) website out: https://www.dirsyncpro.org/ and the website from CryFS: https://www.cryfs.org/
