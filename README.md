@@ -78,8 +78,6 @@ docker run --name DirSyncPro -d \
 The docker will automaticaly create a directory named 'cryfs' in the main directory of DirSyncPro, please copy the 'cryfs.cfg' to a save place since you will need this file and your selected password for CryFS to decrypt the files.
 Restoring of encrypted files on another computer/server with this Docker: start the container once with CryFS enabled but set no password, the container will start and create the 'cryfs' directory, stop the container copy your cryfs.cfg in the 'cryfs' folder edit the Docker and set the apropriate password and blocksize for the cryfs.cfg and restart the Docker. Now you can sync from/or to your encrypted share again.
 
-Also there is a commandline mode without the GUI if you configured all right under the 'Show more settings' section, please be sure that you put your config file in the main directory of the Docker and specify it.
-
 ### Webgui address: http://[SERVERIP]:[PORT]/vnc_auto.html
 
 Please check also the DirSyncPro Developers (O. Givi) website out: https://www.dirsyncpro.org/ and the website from CryFS: https://www.cryfs.org/
