@@ -74,7 +74,7 @@ docker run --name DirSyncPro -d \
     ich777/dirsyncpro
 ```
 
->**ENCRYPTION NOTE:** The mounted folder will be automaticaly encrypted (smb: '/mnt/smb' - ftp: '/mnt/ftp' - webdav: '/mnt/webdav' - local: if you set the type to 'local' you must set the container mountpoint to: '/mnt/local').
+>**ENCRYPTION NOTE:** The mounted folder will be automaticaly encrypted (smb: '/mnt/smb' - ftp: '/mnt/ftp' - webdav: '/mnt/webdav' - local: if you set the type to 'local' you must set the container mountpoint to: '/mnt/local'). Please also note if you set up a encrypted share for the first time the destination folder should be empty.
 The docker will automaticaly create a directory named 'cryfs' in the main directory of DirSyncPro, please copy the 'cryfs.cfg' to a save place since you will need this file and your selected password for CryFS to decrypt the files.
 Restoring of encrypted files on another computer/server with this Docker: start the container once with CryFS enabled but set no password, the container will start and create the 'cryfs' directory, stop the container copy your cryfs.cfg in the 'cryfs' folder edit the Docker and set the apropriate password and blocksize for the cryfs.cfg and restart the Docker. Now you can sync from/or to your encrypted share again.
 
