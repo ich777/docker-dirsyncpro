@@ -162,10 +162,10 @@ if [ "${CRYFS}" == "true" ]; then
 
     if [ "${REMOTE_TYPE}" == "local" ]; then
       if [ ! -d /mnt/local ]; then
-          echo "--------------------------------------------------------------------"
-          echo "------Encryption enabled, path '/mnt/local' not found, please-------"
-          echo "---be sure to mount a volume to this path with encryption enabled---"
-          echo "--------------------------------------------------------------------"
+          echo "------------------------------------------------------------------------"
+          echo "--------Encryption enabled! Path '/mnt/local' not found, please---------"
+          echo "---be sure to mount a volume to this path while encryption is enabled---"
+          echo "------------------------------------------------------------------------"
           sleep infinity
       fi
 		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/local/ ; then
