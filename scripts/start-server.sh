@@ -1,5 +1,4 @@
 #!/bin/bash
-
 DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
 CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 
