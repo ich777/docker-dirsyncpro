@@ -116,7 +116,7 @@ export CRYFS_FRONTEND=noninteractive
             echo "---Couldn't mount ${REMOTE_DIR}---"
             sleep infinity
         fi
-        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /mnt/smb/ /tmp/cryfs/ ; then
+        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/smb/ ; then
             echo "---Starting CryFS encryption---"
         else
             echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
@@ -134,7 +134,7 @@ export CRYFS_FRONTEND=noninteractive
             echo "---Couldn't mount ${REMOTE_DIR}---"
             sleep infinity
         fi
-		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /mnt/ftp/ /tmp/cryfs/ ; then
+		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/ftp/; then
             echo "---Starting CryFS encryption---"
         else
             echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
@@ -152,7 +152,7 @@ export CRYFS_FRONTEND=noninteractive
             echo "---Couldn't mount ${REMOTE_DIR}---"
             sleep infinity
         fi
-        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /mnt/webdav/ /tmp/cryfs/ ; then
+        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/webdav/ ; then
             echo "---Starting CryFS encryption---"
         else
             echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
@@ -168,7 +168,7 @@ export CRYFS_FRONTEND=noninteractive
           echo "--------------------------------------------------------------------"
           sleep infinity
       fi
-		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /mnt/local/ /tmp/cryfs/ ; then
+		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/local/ ; then
             echo "---Starting CryFS encryption---"
         else
             echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
