@@ -5,13 +5,17 @@ MAINTAINER ich777
 RUN apt-get update
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV TZ=Europe/Rome
-RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc
+RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs
 
 ENV DATA_DIR=/dirsyncpro
 ENV REMOTE_DIR="192.168.1.1"
 ENV REMOTE_TYPE="smb"
 ENV REMOTE_USER=""
 ENV REMOTE_PWD=""
+ENV CRYFS=""
+ENV CRYFS_PWD=""
+ENV CRYFS_BLOCKSIZE=262144
+ENV CRYFS_EXTRA_PARAMETERS=""
 ENV RUNTIME_NAME="jre1.8.0_211"
 ENV DL_URL="https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz"
 ENV CMD_MODE=""

@@ -90,46 +90,132 @@ elif [ "$DL_V" != "$CUR_V" ]; then
     CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 fi
 
-
-if [ "${REMOTE_TYPE}" == "smb" ]; then
-	echo "---Mounting SAMBA share---"
-    if [ ! -d /mnt/smb ]; then
-    	mkdir /mnt/smb
+if [ "${CRYFS}" == "true" ]; then
+	export CRYFS_FRONTEND=noninteractive
+	if [ ! -d ${DATA_DIR}/cryfs ]; then
+  		mkdir ${DATA_DIR}/cryfs
     fi
-	if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} //${REMOTE_DIR} /mnt/smb ; then
-		echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
-	else
-		echo "---Couldn't mount ${REMOTE_DIR}---"
-		sleep infinity
-	fi
-fi
-
-if [ "${REMOTE_TYPE}" == "ftp" ]; then
-    if [ ! -d /mnt/ftp ]; then
-    	mkdir /mnt/ftp
+	if [ ! -d /tmp/cryfs ]; then
+  		mkdir /tmp/cryfs
     fi
-	if curlftpfs ${REMOTE_USER}:${REMOTE_PWD}@${REMOTE_DIR} /mnt/ftp ; then
-		echo "---Mounted ${REMOTE_DIR} to /mnt/ftp---"
-	else
-		echo "---Couldn't mount ${REMOTE_DIR}---"
-		sleep infinity
-	fi
-fi
-
-if [ "${REMOTE_TYPE}" == "webdav" ]; then
-    if [ ! -d /mnt/webdav ]; then
-    	mkdir /mnt/webdav
+	if [ -z "$CRYFS_PWD" ]; then
+    	echo "----------------------------------------------"
+    	echo "--------No CryFS password set, please---------"
+        echo "---set a password and restart the container---"
+        echo "----------------------------------------------"
+        sleep infinity
     fi
-	if echo "${REMOTE_PWD}" | sudo mount -t davfs -o noexec,username=${REMOTE_USER},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /mnt/webdav/ ; then
-		echo "---Mounted ${REMOTE_DIR} to /mnt/webdav---"
-	else
-		echo "---Couldn't mount ${REMOTE_DIR}---"
-		sleep infinity
-	fi
-fi
+    if [ "${REMOTE_TYPE}" == "smb" ]; then
+        echo "---Mounting SAMBA share---"
+        if [ ! -d /mnt/smb ]; then
+            mkdir /mnt/smb
+        fi
+        if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} //${REMOTE_DIR} /tmp/cryfs ; then
+            echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
+        else
+            echo "---Couldn't mount ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/smb/ ; then
+            echo "---Starting CryFS encryption---"
+        else
+            echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
+	
+    if [ "${REMOTE_TYPE}" == "ftp" ]; then
+        if [ ! -d /mnt/ftp ]; then
+            mkdir /mnt/ftp
+        fi
+        if curlftpfs ${REMOTE_USER}:${REMOTE_PWD}@${REMOTE_DIR} /tmp/cryfs ; then
+            echo "---Mounted ${REMOTE_DIR} to /mnt/ftp---"
+        else
+            echo "---Couldn't mount ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/ftp/; then
+            echo "---Starting CryFS encryption---"
+        else
+            echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
 
-if [ "${REMOTE_TYPE}" == "local" ]; then
-	echo "---Local mounting is selected, please mount your local path to the container---"
+    if [ "${REMOTE_TYPE}" == "webdav" ]; then
+        if [ ! -d /mnt/webdav ]; then
+            mkdir /mnt/webdav
+        fi
+        if echo "${REMOTE_PWD}" | sudo mount -t davfs -o noexec,username=${REMOTE_USER},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /tmp/webdav/ ; then
+            echo "---Mounted ${REMOTE_DIR} to /mnt/webdav---"
+        else
+            echo "---Couldn't mount ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/webdav/ ; then
+            echo "---Starting CryFS encryption---"
+        else
+            echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
+
+    if [ "${REMOTE_TYPE}" == "local" ]; then
+      if [ ! -d /mnt/local ]; then
+          echo "------------------------------------------------------------------------"
+          echo "--------Encryption enabled! Path '/mnt/local' not found, please---------"
+          echo "---be sure to mount a volume to this path while encryption is enabled---"
+          echo "------------------------------------------------------------------------"
+          sleep infinity
+      fi
+		if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/local/ ; then
+            echo "---Starting CryFS encryption---"
+        else
+            echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
+else
+    if [ "${REMOTE_TYPE}" == "smb" ]; then
+        echo "---Mounting SAMBA share---"
+        if [ ! -d /mnt/smb ]; then
+            mkdir /mnt/smb
+        fi
+        if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} //${REMOTE_DIR} /mnt/smb ; then
+            echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
+        else
+            echo "---Couldn't mount ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
+
+    if [ "${REMOTE_TYPE}" == "ftp" ]; then
+        if [ ! -d /mnt/ftp ]; then
+            mkdir /mnt/ftp
+        fi
+        if curlftpfs ${REMOTE_USER}:${REMOTE_PWD}@${REMOTE_DIR} /mnt/ftp ; then
+            echo "---Mounted ${REMOTE_DIR} to /mnt/ftp---"
+        else
+            echo "---Couldn't mount ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
+
+    if [ "${REMOTE_TYPE}" == "webdav" ]; then
+        if [ ! -d /mnt/webdav ]; then
+            mkdir /mnt/webdav
+        fi
+        if echo "${REMOTE_PWD}" | sudo mount -t davfs -o noexec,username=${REMOTE_USER},rw,uid=${UID},gid=${GID} ${REMOTE_DIR} /mnt/webdav/ ; then
+            echo "---Mounted ${REMOTE_DIR} to /mnt/webdav---"
+        else
+            echo "---Couldn't mount ${REMOTE_DIR}---"
+            sleep infinity
+        fi
+    fi
+
+    if [ "${REMOTE_TYPE}" == "local" ]; then
+        echo "---Local mounting is selected, please mount your local path to the container---"
+    fi
 fi
 
 echo "---Preparing Server---"
