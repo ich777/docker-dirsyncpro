@@ -92,18 +92,18 @@ fi
 
 if [ "${CRYFS}" == "true" ]; then
 	export CRYFS_FRONTEND=noninteractive
+	if [ ! -d ${DATA_DIR}/cryfs ]; then
+  		mkdir ${DATA_DIR}/cryfs
+    fi
+	if [ ! -d /tmp/cryfs ]; then
+  		mkdir /tmp/cryfs
+    fi
 	if [ -z "$CRYFS_PWD" ]; then
     	echo "----------------------------------------------"
     	echo "--------No CryFS password set, please---------"
         echo "---set a password and restart the container---"
         echo "----------------------------------------------"
         sleep infinity
-    fi
-	if [ ! -d ${DATA_DIR}/cryfs ]; then
-  		mkdir ${DATA_DIR}/cryfs
-    fi
-	if [ ! -d /tmp/cryfs ]; then
-  		mkdir /tmp/cryfs
     fi
     if [ "${REMOTE_TYPE}" == "smb" ]; then
         echo "---Mounting SAMBA share---"
