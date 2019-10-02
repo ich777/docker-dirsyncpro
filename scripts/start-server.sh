@@ -92,6 +92,13 @@ fi
 
 if [ "${CRYFS}" == "true" ]; then
 export CRYFS_FRONTEND=noninteractive
+	if [ -z "$CRYFS_PWD" ]; then
+    	echo "----------------------------------------------"
+    	echo "------No Encryption password set, please------"
+        echo "---set a password and restart the container---"
+        echo "----------------------------------------------"
+        sleep infinity
+    fi
 	if [ ! -d ${DATA_DIR}/cryfs ]; then
   		mkdir ${DATA_DIR}/cryfs
     fi
