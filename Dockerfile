@@ -5,7 +5,7 @@ MAINTAINER ich777
 RUN apt-get update
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV TZ=Europe/Rome
-RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc
+RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs
 
 ENV DATA_DIR=/dirsyncpro
 ENV REMOTE_DIR="192.168.1.1"
