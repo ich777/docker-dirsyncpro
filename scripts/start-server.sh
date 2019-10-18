@@ -262,5 +262,5 @@ else
 
 	echo "---Starting DirSyncPro---"
 	export DISPLAY=:99
-	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
+	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -Dfile.encoding=UTF-8 -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
 fi
