@@ -224,6 +224,10 @@ find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
 find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \;
+
+echo "---Setting umask to ${UMASK}---"
+umask ${UMASK}
+
 chmod -R 770 ${DATA_DIR}
 
 if [ "${CMD_MODE}" == "true" ]; then
