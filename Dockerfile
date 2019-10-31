@@ -21,6 +21,7 @@ ENV RUNTIME_NAME="jre1.8.0_211"
 ENV DL_URL="https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz"
 ENV CMD_MODE=""
 ENV CMD_FILE=""
+ENV UMASK=000
 ENV UID=99
 ENV GID=100
 
