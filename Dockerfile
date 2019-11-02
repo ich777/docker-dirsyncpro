@@ -7,6 +7,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV TZ=Europe/Rome
 RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs language-pack-en language-pack-ko language-pack-ja fonts-takao
 ENV LANG=en_US.utf8
+RUN sed -i '/    document.title =/c\    document.title = "DirSyncPro - noVNC";' /usr/share/novnc/include/ui.js
 
 ENV DATA_DIR=/dirsyncpro
 ENV REMOTE_DIR="192.168.1.1"
@@ -33,6 +34,8 @@ RUN ulimit -n 2048
 RUN echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 
 ADD /scripts/ /opt/scripts/
+RUN rm /usr/share/novnc/favicon.ico
+COPY /dirsyncpro.ico /usr/share/novnc/favicon.ico
 RUN chmod -R 770 /opt/scripts/
 RUN chown -R dirsyncpro /opt/scripts
 RUN chmod -R 770 /mnt
