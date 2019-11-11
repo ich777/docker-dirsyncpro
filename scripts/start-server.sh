@@ -1,6 +1,8 @@
 #!/bin/bash
 DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
 CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
+echo "---Setting umask to ${UMASK}---"
+umask ${UMASK}
 
 echo "---Checking for 'runtime' folder---"
 if [ ! -d ${DATA_DIR}/runtime ]; then
@@ -225,10 +227,7 @@ find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
 echo "---Checking for old display lock files---"
 find /tmp -name ".X99*" -exec rm -f {} \;
 
-echo "---Setting umask to ${UMASK}---"
-umask ${UMASK}
-
-chmod -R 770 ${DATA_DIR}
+chmod -R 777 ${DATA_DIR}
 
 if [ "${CMD_MODE}" == "true" ]; then
 	echo "-----------------------------------------"
