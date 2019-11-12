@@ -36,10 +36,12 @@ RUN echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 ADD /scripts/ /opt/scripts/
 RUN rm /usr/share/novnc/favicon.ico
 COPY /dirsyncpro.ico /usr/share/novnc/favicon.ico
+COPY /x11vnc /usr/bin/x11vnc
 RUN chmod -R 770 /opt/scripts/
 RUN chown -R dirsyncpro /opt/scripts
 RUN chmod -R 770 /mnt
 RUN chown -R dirsyncpro /mnt
+RUN chmod 751 /usr/bin/x11vnc
 
 USER dirsyncpro
 
