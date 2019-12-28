@@ -1,6 +1,6 @@
 FROM ich777/debian-baseimage
 
-MAINTAINER ich777
+LABEL maintainer="admin@minenet.at"
 
 RUN export TZ=Europe/Rome && \
 	apt-get update
@@ -18,7 +18,7 @@ ENV CRYFS=""
 ENV CRYFS_PWD=""
 ENV CRYFS_BLOCKSIZE=262144
 ENV CRYFS_EXTRA_PARAMETERS=""
-ENV RUNTIME_NAME="jre1.8.0_211"
+ENV RUNTIME_NAME="basicjre"
 ENV DL_URL="https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz"
 ENV CMD_MODE=""
 ENV CMD_FILE=""
