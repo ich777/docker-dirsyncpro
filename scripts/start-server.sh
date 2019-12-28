@@ -44,7 +44,7 @@ if [ "$DL_V" == "$CUR_V" ]; then
 elif [ -z "CUR_V" ]; then
 	echo "---DirSyncPro not found, downloading...---"
     cd ${DATA_DIR}
-    if wget -q -O -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
     	echo "---Successfully downloaded DirSyncPro---"
     else
     	echo "-------------------------------------------------------"
@@ -75,7 +75,7 @@ elif [ "$DL_V" != "$CUR_V" ]; then
     cd ${DATA_DIR}
     rm -R DirSyncPro-$CUR_V-Linux
     rm -R dirsync-$CUR_V
-    if wget -q -O -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
     	echo "---Successfully downloaded DirSyncPro---"
     else
     	echo "-------------------------------------------------------"
