@@ -42,7 +42,7 @@ COPY /icons/* /usr/share/novnc/app/images/icons/
 RUN chmod -R 770 /opt/scripts/ && \
 	chown -R dirsyncpro /opt/scripts && \
 	chmod -R 770 /mnt && \
-	chown -R dirsyncpro /mnt && \
+	chown -R dirsyncpro /mnt
 
 USER dirsyncpro
 
