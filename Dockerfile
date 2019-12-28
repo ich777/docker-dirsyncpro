@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ich777/debian-baseimage
 
 MAINTAINER ich777
 
