@@ -6,8 +6,13 @@ RUN export TZ=Europe/Rome && \
 	apt-get update && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	echo $TZ > /etc/timezone && \
-	apt-get -y install --no-install-recommends sudo curl && \
-	rm -rf /var/lib/apt/lists/*
+	echo "yes" | apt-get -y install --no-install-recommends cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs fonts-takao && \
+	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
+	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
+	locale-gen && \
+	rm -rf /var/lib/apt/lists/* && \
+	sed -i '/    document.title =/c\    document.title = "DirSyncPro - noVNC";' /usr/share/novnc/app/ui.js && \
+	rm /usr/share/novnc/app/images/icons/*
 
 ENV DATA_DIR=/dirsyncpro
 ENV REMOTE_DIR="192.168.1.1"
@@ -34,6 +39,7 @@ RUN mkdir $DATA_DIR && \
 
 ADD /scripts/ /opt/scripts/
 COPY /x11vnc /usr/bin/x11vnc
+COPY /icons/* /usr/share/novnc/app/images/icons/
 RUN chmod -R 770 /opt/scripts/ && \
 	chown -R dirsyncpro /opt/scripts && \
 	chmod -R 770 /mnt && \
