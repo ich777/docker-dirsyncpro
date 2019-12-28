@@ -1,4 +1,4 @@
-FROM ich777/debian-baseimage
+FROM ich777/novnc-baseimage
 
 LABEL maintainer="admin@minenet.at"
 
@@ -6,7 +6,7 @@ RUN export TZ=Europe/Rome && \
 	apt-get update && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	echo $TZ > /etc/timezone && \
-	echo "yes" | apt-get -y install --no-install-recommends cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs fonts-takao libxcomposite-dev && \
+	echo "yes" | apt-get -y install --no-install-recommends cifs-utils sudo curl curlftpfs davfs2 cryfs fonts-takao && \
 	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
 	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
 	locale-gen && \
