@@ -38,13 +38,11 @@ RUN mkdir $DATA_DIR && \
 	echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 
 ADD /scripts/ /opt/scripts/
-COPY /x11vnc /usr/bin/x11vnc
 COPY /icons/* /usr/share/novnc/app/images/icons/
 RUN chmod -R 770 /opt/scripts/ && \
 	chown -R dirsyncpro /opt/scripts && \
 	chmod -R 770 /mnt && \
 	chown -R dirsyncpro /mnt && \
-	chmod 751 /usr/bin/x11vnc
 
 USER dirsyncpro
 
