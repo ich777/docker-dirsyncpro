@@ -1,13 +1,18 @@
-FROM ubuntu
+FROM ich777/debian-baseimage
 
-MAINTAINER ich777
+LABEL maintainer="admin@minenet.at"
 
-RUN apt-get update
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ENV TZ=Europe/Rome
-RUN apt-get -y install wget cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs language-pack-en language-pack-ko language-pack-ja fonts-takao
-ENV LANG=en_US.utf8
-RUN sed -i '/    document.title =/c\    document.title = "DirSyncPro - noVNC";' /usr/share/novnc/include/ui.js
+RUN export TZ=Europe/Rome && \
+	apt-get update && \
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+	echo $TZ > /etc/timezone && \
+	echo "yes" | apt-get -y install --no-install-recommends cifs-utils sudo curl curlftpfs davfs2 xvfb wmctrl x11vnc fluxbox screen novnc cryfs fonts-takao libxcomposite-dev && \
+	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
+	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
+	locale-gen && \
+	rm -rf /var/lib/apt/lists/* && \
+	sed -i '/    document.title =/c\    document.title = "DirSyncPro - noVNC";' /usr/share/novnc/app/ui.js && \
+	rm /usr/share/novnc/app/images/icons/*
 
 ENV DATA_DIR=/dirsyncpro
 ENV REMOTE_DIR="192.168.1.1"
@@ -18,7 +23,7 @@ ENV CRYFS=""
 ENV CRYFS_PWD=""
 ENV CRYFS_BLOCKSIZE=262144
 ENV CRYFS_EXTRA_PARAMETERS=""
-ENV RUNTIME_NAME="jre1.8.0_211"
+ENV RUNTIME_NAME="basicjre"
 ENV DL_URL="https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz"
 ENV CMD_MODE=""
 ENV CMD_FILE=""
@@ -26,22 +31,20 @@ ENV UMASK=000
 ENV UID=99
 ENV GID=100
 
-RUN mkdir $DATA_DIR
-RUN useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID dirsyncpro
-RUN chown -R dirsyncpro $DATA_DIR
-
-RUN ulimit -n 2048
-RUN echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
+RUN mkdir $DATA_DIR && \
+	useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID dirsyncpro && \
+	chown -R dirsyncpro $DATA_DIR && \
+	ulimit -n 2048 && \
+	echo "dirsyncpro ALL=(root) NOPASSWD:/bin/mount" >> /etc/sudoers
 
 ADD /scripts/ /opt/scripts/
-RUN rm /usr/share/novnc/favicon.ico
-COPY /dirsyncpro.ico /usr/share/novnc/favicon.ico
 COPY /x11vnc /usr/bin/x11vnc
-RUN chmod -R 770 /opt/scripts/
-RUN chown -R dirsyncpro /opt/scripts
-RUN chmod -R 770 /mnt
-RUN chown -R dirsyncpro /mnt
-RUN chmod 751 /usr/bin/x11vnc
+COPY /icons/* /usr/share/novnc/app/images/icons/
+RUN chmod -R 770 /opt/scripts/ && \
+	chown -R dirsyncpro /opt/scripts && \
+	chmod -R 770 /mnt && \
+	chown -R dirsyncpro /mnt && \
+	chmod 751 /usr/bin/x11vnc
 
 USER dirsyncpro
 

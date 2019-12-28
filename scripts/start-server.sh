@@ -14,12 +14,17 @@ fi
 
 echo "---Checking if Runtime is installed---"
 if [ -z "$(find ${DATA_DIR}/runtime -name jre*)" ]; then
-    if [ "${RUNTIME_NAME}" == "jre1.8.0_211" ]; then
+    if [ "${RUNTIME_NAME}" == "basicjre" ]; then
     	echo "---Downloading and installing Runtime---"
 		cd ${DATA_DIR}/runtime
-		wget -qi ${RUNTIME_NAME} https://github.com/ich777/docker-minecraft-basic-server/raw/master/runtime/8u211.tar.gz
-        tar --directory ${DATA_DIR}/runtime -xvzf ${DATA_DIR}/runtime/8u211.tar.gz
-        rm -R ${DATA_DIR}/runtime/8u211.tar.gz
+		if wget -q -nc --show-progress --progress=bar:force:noscroll https://github.com/ich777/runtimes/raw/master/jre/basicjre.tar.gz ; then
+			echo "---Successfully downloaded Runtime!---"
+		else
+			echo "---Something went wrong, can't download Runtime, putting server in sleep mode---"
+			sleep infinity
+		fi
+        tar --directory ${DATA_DIR}/runtime -xvzf ${DATA_DIR}/runtime/basicjre.tar.gz
+        rm -R ${DATA_DIR}/runtime/basicjre.tar.gz
     else
     	if [ ! -d ${DATA_DIR}/runtime/${RUNTIME_NAME} ]; then
         	echo "---------------------------------------------------------------------------------------------"
@@ -39,8 +44,9 @@ if [ "$DL_V" == "$CUR_V" ]; then
 elif [ -z "CUR_V" ]; then
 	echo "---DirSyncPro not found, downloading...---"
     cd ${DATA_DIR}
-    wget -q -O ${DL_URL}
-    if [ ! -f ${DATA_DIR}/DirSyncPro-$DL_V-Linux.tar.gz ]; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
+    	echo "---Successfully downloaded DirSyncPro---"
+    else
     	echo "-------------------------------------------------------"
     	echo "---Something went wrong couldn't download DirSyncPro---"
         echo "------Please make sure to put in the Linux version-----"
@@ -48,7 +54,7 @@ elif [ -z "CUR_V" ]; then
         echo "----------Example: DirSyncPro-1.53.Linux.tar.gz--------"
         echo "-------------------------------------------------------"
         sleep infinity
-    fi
+	fi
 	tar -xzf DirSyncPro-$DL_V-Linux.tar.gz
     if [ ! -d ${DATA_DIR}/DirSyncPro-$DL_V-Linux ]; then
     	echo "-------------------------------------------------------"
@@ -69,8 +75,9 @@ elif [ "$DL_V" != "$CUR_V" ]; then
     cd ${DATA_DIR}
     rm -R DirSyncPro-$CUR_V-Linux
     rm -R dirsync-$CUR_V
-    wget "${DL_URL}"
-    if [ ! -f ${DATA_DIR}/DirSyncPro-$DL_V-Linux.tar.gz ]; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
+    	echo "---Successfully downloaded DirSyncPro---"
+    else
     	echo "-------------------------------------------------------"
     	echo "---Something went wrong couldn't download DirSyncPro---"
         echo "------Please make sure to put in the Linux version-----"
@@ -78,7 +85,7 @@ elif [ "$DL_V" != "$CUR_V" ]; then
         echo "----------Example: DirSyncPro-1.53.Linux.tar.gz--------"
         echo "-------------------------------------------------------"
         sleep infinity
-    fi
+	fi
 	tar -xzf DirSyncPro-$DL_V-Linux.tar.gz
     if [ ! -d ${DATA_DIR}/DirSyncPro-$DL_V-Linux ]; then
     	echo "-------------------------------------------------------"
@@ -221,6 +228,7 @@ else
 fi
 
 echo "---Preparing Server---"
+export RUNTIME_NAME="$(ls -d ${DATA_DIR}/runtime/* | cut -d '/' -f4)"
 echo "---Checking for old logfiles---"
 find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
 find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
