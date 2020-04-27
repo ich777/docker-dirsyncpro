@@ -17,4 +17,5 @@ fi
 
 echo "---Starting...---"
 chown -R ${UID}:${GID} /opt/scripts
+find /var/run/mount.davfs -name "*.pid" -exec rm -f {} \; 2> /dev/null
 su ${USER} -c "/opt/scripts/start-server.sh"
