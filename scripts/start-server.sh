@@ -113,22 +113,13 @@ if [ "${CRYFS}" == "true" ]; then
         sleep infinity
     fi
     if [ "${REMOTE_TYPE}" == "smb" ]; then
-        echo "---Mounting SAMBA share---"
-        if [ ! -d /mnt/smb ]; then
-            mkdir /mnt/smb
-        fi
-        if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} //${REMOTE_DIR} /tmp/cryfs ; then
-            echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
-        else
-            echo "---Couldn't mount ${REMOTE_DIR}---"
-            sleep infinity
-        fi
-        if echo "${CRYFS_PWD}" | cryfs -c /dirsyncpro/cryfs/cryfs.cfg --logfile /dirsyncpro/cryfs/cryfs.log --blocksize ${CRYFS_BLOCKSIZE} ${CRYFS_EXTRA_PARAMETERS} /tmp/cryfs/ /mnt/smb/ ; then
-            echo "---Starting CryFS encryption---"
-        else
-            echo "---Couldn't start CryFS encryption of ${REMOTE_DIR}---"
-            sleep infinity
-        fi
+		echo "----------------------------------------------------"
+        echo "---SMB mounting inside the container is removed!----"
+		echo "---Please mount your share through the Unassigned---"
+		echo "---Devices Plugin and select the mode 'local' in----"
+        echo "----the template and mount the share inside the ----"
+		echo "---------------------container!---------------------"
+		echo "----------------------------------------------------"
     fi
 	
     if [ "${REMOTE_TYPE}" == "ftp" ]; then
@@ -184,16 +175,13 @@ if [ "${CRYFS}" == "true" ]; then
     fi
 else
     if [ "${REMOTE_TYPE}" == "smb" ]; then
-        echo "---Mounting SAMBA share---"
-        if [ ! -d /mnt/smb ]; then
-            mkdir /mnt/smb
-        fi
-        if sudo mount -t cifs -o username=${REMOTE_USER},password=${REMOTE_PWD},rw,uid=${UID},gid=${GID} //${REMOTE_DIR} /mnt/smb ; then
-            echo "---Mounted ${REMOTE_DIR} to /mnt/smb---"
-        else
-            echo "---Couldn't mount ${REMOTE_DIR}---"
-            sleep infinity
-        fi
+		echo "----------------------------------------------------"
+        echo "---SMB mounting inside the container is removed!----"
+		echo "---Please mount your share through the Unassigned---"
+		echo "---Devices Plugin and select the mode 'local' in----"
+        echo "----the template and mount the share inside the ----"
+		echo "---------------------container!---------------------"
+		echo "----------------------------------------------------"
     fi
 
     if [ "${REMOTE_TYPE}" == "ftp" ]; then
