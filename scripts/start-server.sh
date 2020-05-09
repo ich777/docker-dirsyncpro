@@ -120,6 +120,7 @@ if [ "${CRYFS}" == "true" ]; then
         echo "----the template and mount the share inside the ----"
 		echo "---------------------container!---------------------"
 		echo "----------------------------------------------------"
+		sleep infinity
     fi
 	
     if [ "${REMOTE_TYPE}" == "ftp" ]; then
@@ -182,6 +183,7 @@ else
         echo "----the template and mount the share inside the ----"
 		echo "---------------------container!---------------------"
 		echo "----------------------------------------------------"
+		sleep infinity
     fi
 
     if [ "${REMOTE_TYPE}" == "ftp" ]; then
