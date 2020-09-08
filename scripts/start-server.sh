@@ -1,4 +1,5 @@
 #!/bin/bash
+export DISPLAY=:99
 DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
 CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 
@@ -254,12 +255,13 @@ else
 	echo "---Starting x11vnc server---"
 	screen -S x11vnc -L -Logfile ${DATA_DIR}/x11vncLog.0 -d -m /opt/scripts/start-x11.sh
 	sleep 5
-
+    echo "---Starting Fluxbox---"
+    screen -d -m env HOME=/etc /usr/bin/fluxbox
+    sleep 2
 	echo "---Starting noVNC server---"
 	websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:5900
 	sleep 5
 
 	echo "---Starting DirSyncPro---"
-	export DISPLAY=:99
 	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -Dfile.encoding=UTF-8 -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
 fi
