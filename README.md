@@ -21,6 +21,7 @@ Please also check out the Developers website of DirSyncPro: https://www.dirsyncp
 | CRYFS_PWD | Set the encryption password for CryFS | password |
 | CRYFS_BLOCKSIZE| Set the blocksize for your files in bytes (262144 Byte = 256 KiB) | 262144 |
 | CRYFS_EXTRA_PARAMETERS | Extra parameters for CryFS if needed, otherwise leave blank | --unmount-idle 30 |
+| START_PARAMS | Here you can set extra DirSyncPro start parameters (eg: '-schedule' to start the schedule eingine on start) | |
 | RUNTIME_NAME | Runtime name (must be profided) | jre1.8.0_211 |
 | DL_URL | Download URL for DirSyncPro | https://sourceforge.net/projects/directorysync/files... |
 | CMD_MODE | Set to 'true' if you want to use command line mode (otherwise blank) | |
