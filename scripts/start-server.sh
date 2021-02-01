@@ -263,5 +263,5 @@ else
 	sleep 5
 
 	echo "---Starting DirSyncPro---"
-	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -Dfile.encoding=UTF-8 -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar
+	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -Dfile.encoding=UTF-8 -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar ${START_PARAMS}
 fi
