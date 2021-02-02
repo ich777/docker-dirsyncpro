@@ -15,6 +15,9 @@ else
 	echo "---No optional script found, continuing---"
 fi
 
+echo "---Checking configuration for noVNC---"
+novnccheck
+
 echo "---Starting...---"
 chown -R ${UID}:${GID} /opt/scripts
 find /var/run/mount.davfs -name "*.pid" -exec rm -f {} \; 2> /dev/null
