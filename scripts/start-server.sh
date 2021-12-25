@@ -40,7 +40,7 @@ fi
 echo "---Checking for DirSyncPro---"
 if [ "$DL_V" == "$CUR_V" ]; then
 	echo "---DirSyncPro found---"
-elif [ -z "CUR_V" ]; then
+elif [ -z "$CUR_V" ]; then
 	echo "---DirSyncPro not found, downloading...---"
     cd ${DATA_DIR}
     if wget -q -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
@@ -63,7 +63,7 @@ elif [ -z "CUR_V" ]; then
         sleep infinity
     fi
     touch dirsync-$DL_V
-    rm -R DirSyncPro-$DL_V-Linux.tar.gz
+    rm -R DirSyncPro-$DL_V-Linux.tar.gz 2>/dev/null
     CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 elif [ "$DL_V" != "$CUR_V" ]; then
 	echo "-------------------------------------------"
@@ -72,8 +72,8 @@ elif [ "$DL_V" != "$CUR_V" ]; then
     echo "----------Installing version: $DL_V-----------"
 	echo "-------------------------------------------"
     cd ${DATA_DIR}
-    rm -R DirSyncPro-$CUR_V-Linux
-    rm -R dirsync-$CUR_V
+    rm -R DirSyncPro-$CUR_V-Linux 2>/dev/null
+    rm -R dirsync-$CUR_V 2>/dev/null
     if wget -q -nc --show-progress --progress=bar:force:noscroll "${DL_URL}" ; then
     	echo "---Successfully downloaded DirSyncPro---"
     else
@@ -94,7 +94,7 @@ elif [ "$DL_V" != "$CUR_V" ]; then
         sleep infinity
     fi
     touch dirsync-$DL_V
-    rm -R DirSyncPro-$DL_V-Linux.tar.gz
+    rm -R DirSyncPro-$DL_V-Linux.tar.gz 2>/dev/null
     CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 fi
 
