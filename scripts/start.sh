@@ -19,7 +19,8 @@ echo "---Checking configuration for noVNC---"
 novnccheck
 
 echo "---Starting...---"
-chown -R ${UID}:${GID} /opt/scripts
+chown -R root:${GID} /opt/scripts
+chmod -R 750 /opt/scripts
 find /var/run/mount.davfs -name "*.pid" -exec rm -f {} \; 2> /dev/null
 chown -R ${UID}:${GID} ${DATA_DIR}
 
