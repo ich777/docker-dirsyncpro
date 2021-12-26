@@ -25,7 +25,7 @@ find /var/run/mount.davfs -name "*.pid" -exec rm -f {} \; 2> /dev/null
 chown -R ${UID}:${GID} ${DATA_DIR}
 
 term_handler() {
-	kill -SIGTERM "$(pidof java)"
+	kill -SIGINT "$(pidof java)"
 	tail --pid="$(pidof java)" -f 2>/dev/null
 	exit 143;
 }
