@@ -1,5 +1,6 @@
 #!/bin/bash
 export DISPLAY=:99
+export XAUTHORITY=${DATA_DIR}/.Xauthority
 DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
 CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 
@@ -222,7 +223,13 @@ echo "---Checking for old logfiles---"
 find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
 find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
 echo "---Checking for old display lock files---"
-find /tmp -name ".X99*" -exec rm -f {} \;
+rm -rf /tmp/.X99*
+rm -rf /tmp/.X11*
+rm -rf ${DATA_DIR}/.vnc/*.log ${DATA_DIR}/.vnc/*.pid
+if [ -f ${DATA_DIR}/.vnc/passwd ]; then
+	chmod 600 ${DATA_DIR}/.vnc/passwd
+fi
+screen -wipe 2&>/dev/null
 
 chmod -R ${DATA_PERM} ${DATA_DIR}
 
@@ -249,18 +256,14 @@ if [ "${CMD_MODE}" == "true" ]; then
 		sleep infinity
 	fi
 else
-	echo "---Starting Xvfb server---"
-	screen -S Xvfb -L -Logfile ${DATA_DIR}/XvfbLog.0 -d -m /opt/scripts/start-Xvfb.sh
-	sleep 5
-	echo "---Starting x11vnc server---"
-	screen -S x11vnc -L -Logfile ${DATA_DIR}/x11vncLog.0 -d -m /opt/scripts/start-x11.sh
-	sleep 5
+    echo "---Starting TurboVNC server---"
+    vncserver -geometry ${CUSTOM_RES_W}x${CUSTOM_RES_H} -depth ${CUSTOM_DEPTH} :99 -rfbport ${RFB_PORT} -noxstartup ${TURBOVNC_PARAMS} 2>/dev/null
+    sleep 2
     echo "---Starting Fluxbox---"
     screen -d -m env HOME=/etc /usr/bin/fluxbox
     sleep 2
-	echo "---Starting noVNC server---"
-	websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem ${NOVNC_PORT} localhost:${RFB_PORT}
-	sleep 5
+    echo "---Starting noVNC server---"
+    websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem ${NOVNC_PORT} localhost:${RFB_PORT}
 
 	echo "---Starting DirSyncPro---"
 	${DATA_DIR}/runtime/${RUNTIME_NAME}/bin/java -Dfile.encoding=UTF-8 -jar ${DATA_DIR}/DirSyncPro-$CUR_V-Linux/dirsyncpro.jar ${START_PARAMS}
