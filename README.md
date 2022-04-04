@@ -81,6 +81,20 @@ Restoring of encrypted files on another computer/server with this Docker: start 
 
 ### Webgui address: http://[SERVERIP]:[PORT]/vnc_auto.html
 
+## Set VNC Password:
+ Please be sure to create the password first inside the container, to do that open up a console from the container (Unraid: In the Docker tab click on the container icon and on 'Console' then type in the following):
+
+1) **su $USER**
+2) **vncpasswd**
+3) **ENTER YOUR PASSWORD TWO TIMES AND PRESS ENTER AND SAY NO WHEN IT ASKS FOR VIEW ACCESS**
+
+Unraid: close the console, edit the template and create a variable with the `Key`: `TURBOVNC_PARAMS` and leave the `Value` empty, click `Add` and `Apply`.
+
+All other platforms running Docker: create a environment variable `TURBOVNC_PARAMS` that is empty or simply leave it empty:
+```
+    --env 'TURBOVNC_PARAMS='
+```
+
 Please check also the DirSyncPro Developers (O. Givi) website out: https://www.dirsyncpro.org/ and the website from CryFS: https://www.cryfs.org/
 
 
