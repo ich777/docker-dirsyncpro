@@ -23,7 +23,7 @@ Please also check out the Developers website of DirSyncPro: https://www.dirsyncp
 | CRYFS_EXTRA_PARAMETERS | Extra parameters for CryFS if needed, otherwise leave blank | --unmount-idle 30 |
 | START_PARAMS | Here you can set extra DirSyncPro start parameters (eg: '-schedule' to start the schedule eingine on start) | |
 | RUNTIME_NAME | Runtime name (must be profided) | jre1.8.0_211 |
-| DL_URL | Download URL for DirSyncPro | https://sourceforge.net/projects/directorysync/files... |
+| DL_URL | Download URL for DirSyncPro | https://github.com/ich777/docker-dirsyncpro/raw/master/executable/DirSyncPro-1.53-Linux.tar.gz |
 | CMD_MODE | Set to 'true' if you want to use command line mode (otherwise blank) | |
 | CMD_FILE | Specify the CMD file without the .dsc extension (only for CMD_MODE) | |
 | UID | User Identifier | 99 |
