@@ -1,7 +1,7 @@
 #!/bin/bash
 export DISPLAY=:99
 export XAUTHORITY=${DATA_DIR}/.Xauthority
-DL_V=$(echo "${DL_URL}" | cut -d '-' -f 2)
+DL_V=$(echo "${DL_URL}" | rev | cut -d '-' -f 2 | rev)
 CUR_V="$(find $DATA_DIR -name dirsync-* | cut -d '-' -f 2)"
 
 echo "---Checking for 'runtime' folder---"
