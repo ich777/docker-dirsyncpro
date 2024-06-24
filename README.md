@@ -41,7 +41,7 @@ docker run --name DirSyncPro -d \
     --env 'REMOTE_USER=username' \
     --env 'REMOTE_PWD=password' \
     --env 'RUNTIME_NAME=jre1.8.0_211 \
-    --env 'DL_URL=https://sourceforge.net/projects/directorysync/files/DirSync Pro (stable)/1.53/DirSyncPro-1.53-Linux.tar.gz' \
+    --env 'DL_URL=https://github.com/ich777/docker-dirsyncpro/raw/master/executable/DirSyncPro-1.53-Linux.tar.gz' \
     --env 'UID=99' \
     --env 'GID=100' \
     --volume /mnt/user/appdata/dirsyncpro:/dirsyncpro \
